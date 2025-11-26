@@ -76,3 +76,34 @@ The RATING column contained mixed data types including:
 - **RATING_TYPE Column**: Mixed languages → Standardized English translations
 - **VOTES Column**: Object type with mixed values → Integer type with numeric values only
 - Null values: 0
+
+## Duplicate Data Removal
+
+### Summary
+A significant amount of duplicate data was identified and removed from the merged Zomato dataset to ensure data quality and accuracy for analysis.
+
+### Results
+- **Original dataset size**: 422,492 rows
+- **After removing duplicates**: 105,622 rows  
+- **Duplicates removed**: 316,870 rows
+- **Percentage of duplicates removed**: 75.00%
+
+### Impact
+The duplicate removal process eliminated three-quarters of the original dataset, indicating substantial data redundancy across the city-specific CSV files. This cleaning operation ensures:
+
+- Unique restaurant entries for accurate analysis
+- Improved data quality and reliability
+- Reduced dataset size for better performance
+- Elimination of skewed results due to duplicate records
+
+### Implementation
+```python
+# Calculate duplicate percentage
+original_count = len(df)
+df_clean = df.drop_duplicates()
+clean_count = len(df_clean)
+duplicates_removed = original_count - clean_count
+duplicate_percentage = (duplicates_removed / original_count) * 100
+```
+
+This cleaning step is crucial for maintaining data integrity in subsequent analysis and modeling tasks.

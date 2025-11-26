@@ -15,6 +15,7 @@ Zomato/
 ├── README.md
 ├── csv_merger.py
 ├── data_preprocessing.ipynb
+├── data_cleaning_operation.md
 ├── Agra/
 │   ├── 1-Agrahotels.csv
 │   ├── 2-Agrahotels.csv
@@ -79,6 +80,8 @@ The merged dataset includes built-in validation that reports:
 - Number of unique cities processed
 - Missing value counts
 - Duplicate row detection
+
+For detailed data cleaning operations and procedures, see [data_cleaning_operation.md](data_cleaning_operation.md)
 
 ## 📈 Data Analysis Examples
 
