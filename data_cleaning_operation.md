@@ -30,7 +30,49 @@ The RATING column contained mixed data types including:
 - RATING column now contains only numeric values
 - No null values remaining in RATING column
 
+3. **Rating Format Standardization**
+   ```python
+   df['RATING'] = df['RATING'].round(1)
+   df['RATING'] = df['RATING'].apply(lambda x: f"{float(x):.1f}")
+   ```
+   - Rounded all ratings to 1 decimal place
+   - Standardized format to ensure consistent display (e.g., '3.0' instead of '3.')
+
+4. **RATING_TYPE Column Translation**
+   ```python
+   translation_map = {
+       'Sangat Baik': 'Very Good', 'Veľmi dobré': 'Very Good',
+       'Baik': 'Good', 'Bom': 'Good', 'Çok iyi': 'Very Good',
+       'İyi': 'Good', 'Buono': 'Good', 'Média': 'Average',
+       'Dobré': 'Good', 'Velmi dobré': 'Very Good',
+       'Ottimo': 'Excellent', 'Bueno': 'Good',
+       'Promedio': 'Average', 'Excelente': 'Excellent',
+       'Muito bom': 'Very Good', 'Ortalama': 'Average',
+       'Vynikajúce': 'Excellent', 'Muy Bueno': 'Very Good',
+       'Media': 'Average', 'Skvělá volba': 'Excellent choice',
+       'Průměr': 'Average', 'Średnio': 'Average',
+       'Wybitnie': 'Outstanding', 'Skvělé': 'Excellent',
+       'Eccellente': 'Excellent', 'Biasa': 'Ordinary',
+       'Dobrze': 'Good', 'Bardzo dobrze': 'Very Good',
+       'Terbaik': 'Best', 'Priemer': 'Average',
+       'Nedostatek hlasů': 'Insufficient votes'
+   }
+   df['RATING_TYPE'] = df['RATING_TYPE'].map(translation_map).fillna(df['RATING_TYPE'])
+   ```
+   - Translated mixed language rating types to English
+   - Covered multiple languages: Indonesian, Slovak, Turkish, Italian, Spanish, Portuguese, Czech, Polish
+   - Preserved original values for untranslated terms
+
+5. **VOTES Column Data Type Conversion**
+   ```python
+   df['VOTES'] = pd.to_numeric(df['VOTES'], errors='coerce').fillna(0).astype(int)
+   ```
+   - Converted VOTES column from object to numeric (integer) data type
+   - Replaced non-numeric values ('NEW', '-', 'Opening', 'Temporarily') with 0
+   - Ensured all vote counts are integers for proper numerical analysis
+
 ### Data Quality Check
-- Before cleaning: Mixed data types (numeric + text)
-- After cleaning: All numeric values
+- **RATING Column**: Mixed data types → All numeric values with standardized 1 decimal format
+- **RATING_TYPE Column**: Mixed languages → Standardized English translations
+- **VOTES Column**: Object type with mixed values → Integer type with numeric values only
 - Null values: 0
